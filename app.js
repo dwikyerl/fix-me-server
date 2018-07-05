@@ -14,6 +14,9 @@ const app = express();
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use('/', index);
 app.use('/katakunci', secretwords);
 
@@ -35,5 +38,9 @@ app.use(function(err, req, res, next) {
     .status(err.status || 500)
     .json( 'anda tersesat begitu dalam' )
 });
+
+const server = app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port -> ${server.address().port}`)
+})
 
 module.exports = app;
